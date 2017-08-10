@@ -1,31 +1,43 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Songs</h1>
+<div class="row">
+  <div class="col-md-6">
+    <table class="table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Duration</th>
+          <th>Genre</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Duration</th>
-      <th>Genre</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @songs.each do |song| %>
-      <tr>
-        <td><%= song.name %></td>
-        <td><%= song.duration %></td>
-        <td><%= song.genre %></td>
-        <td><%= link_to 'Show', song %></td>
-        <td><%= link_to 'Edit', edit_song_path(song) %></td>
-        <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <tbody>
+        <% @songs.each do |song| %>
+          <tr>
+            <td><%= song.name %></td>
+            <td><%= song.duration %></td>
+            <td><%= song.genre.name %></td>
+            <td><%= link_to 'Show', song %></td>
+            <td><%= link_to 'Edit', edit_song_path(song) %></td>
+            <td><%= link_to 'Destroy', song, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Agregar', song_user_songs_path(song), method: :post, class: 'btn btn-primary btn-sm' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <h2>Filtrar por Género</h2>
+     <%= form_tag(songs_path, {method: "GET"}) do %>
+      <%= collection_select :genre, :id, Genre.all, :id, :name %>
+      <%= submit_tag 'Filtrar', class: 'btn btn-success btn-sm' %>
     <% end %>
-  </tbody>
-</table>
+  </div>
+</div>
 
 <br>
 
 <%= link_to 'New Song', new_song_path %>
+
+
+

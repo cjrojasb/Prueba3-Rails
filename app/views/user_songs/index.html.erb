@@ -1,0 +1,20 @@
+<h1>Mi Playlist</h1>
+<table class="table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Duration</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @songs.each do |song| %>
+      <tr>
+          <td><%= song.name %></td>
+          <td><%= song.duration %></td>
+          <td>
+          <%= link_to('Eliminar', user_song_path(song),method: :delete, class: 'btn btn-danger btn-sm')%>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

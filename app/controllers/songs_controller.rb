@@ -1,10 +1,11 @@
 class SongsController < ApplicationController
   before_action :set_song, only: [:show, :edit, :update, :destroy]
-
+  
   # GET /songs
   # GET /songs.json
   def index
     @songs = Song.all
+    @genres = Genre.all
   end
 
   # GET /songs/1
@@ -15,6 +16,7 @@ class SongsController < ApplicationController
   # GET /songs/new
   def new
     @song = Song.new
+    @genres = Genre.all
   end
 
   # GET /songs/1/edit
@@ -25,6 +27,9 @@ class SongsController < ApplicationController
   # POST /songs.json
   def create
     @song = Song.new(song_params)
+    users_songs = song_params[:users_songs].delete_if{ |x| x.empty? } 
+    @songs = Song.find(users_songs)
+    @song.users << @users 
 
     respond_to do |format|
       if @song.save
@@ -69,6 +74,6 @@ class SongsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def song_params
-      params.require(:song).permit(:name, :duration, :genre_id)
+      params.require(:song).permit(:name, :duration, :genre_id, users_songs: [])
     end
 end

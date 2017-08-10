@@ -22,8 +22,9 @@
   </div>
 
   <div class="field">
-    <%= f.label :genre_id %>
-    <%= f.text_field :genre_id %>
+    <%= f.label :genre_id, "Géneros" %>
+    <%= collection_check_boxes(:song, :users_songs, Genre.all, :id, :name, 
+    checked: song.users.map(&:id)) %>
   </div>
 
   <div class="actions">

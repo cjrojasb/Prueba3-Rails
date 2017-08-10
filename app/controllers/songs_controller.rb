@@ -29,7 +29,7 @@ class SongsController < ApplicationController
     @song = Song.new(song_params)
     users_songs = song_params[:users_songs].delete_if{ |x| x.empty? } 
     @songs = Song.find(users_songs)
-    @song.users << @users 
+    @song.users << @users
 
     respond_to do |format|
       if @song.save
